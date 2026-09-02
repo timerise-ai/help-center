@@ -3,8 +3,8 @@
 Tags are the cross-category axis: a category answers "where does this
 article live", a tag answers "what else is about calendars". They are cheap
 for authors — one frontmatter line — and that is exactly the problem: nothing
-stops `API` on Monday and `api` on Tuesday. The audited corpus, 65 articles,
-had `API` and `api`, `integration` and `integrations`, and a two-word feature
+stops `API` on Monday and `api` on Tuesday. The audited corpus had `API` and
+`api`, `integration` and `integrations`, and a two-word feature
 name with and without a hyphen. Rendered as plain chips nobody noticed; as
 listing pages each pair would have been two half-empty pages.
 

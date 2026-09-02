@@ -229,8 +229,9 @@ export const helpPath = {
 
 `toSummary` exists because the layout passes the whole corpus to client
 components for navigation and search. Passing `HelpArticle` would serialise
-every article body into every page's RSC payload — 64 articles is ~300 KB on
-each request. Strip before it crosses the boundary, always.
+every article body into every page's RSC payload, hundreds of kilobytes on
+each request for a few dozen articles. Strip before it crosses the boundary,
+always.
 
 ## Validation
 

@@ -5,7 +5,8 @@ no dependency. For a help center under a few hundred articles this is the right
 size: the index is ~1 KB per article, it is already in the page for navigation,
 and results appear on the first keystroke with no network.
 
-The original searched `title` and `description` with `includes()`. That misses
+The earlier implementation searched `title` and `description` with
+`includes()`. That misses
 an article whose only mention of "webhook" is in a heading, ranks a description
 hit equal to a title hit, and — because the query was lowercased but never
 trimmed — returned nothing for `"webhooks "` with the trailing space mobile
@@ -256,8 +257,9 @@ export function useHelpSearch(docs: readonly HelpSearchDoc[], options: Options =
 ## The component
 
 Combobox semantics so screen readers announce the result count and the active
-option, arrow keys move, Enter follows the active result (the original followed
-the *first* result on Enter regardless), Escape clears, and focus leaving the
+option, arrow keys move, Enter follows the active result (the earlier
+implementation followed the *first* result on Enter regardless), Escape clears,
+and focus leaving the
 container closes the list without a document-level listener.
 
 ```tsx

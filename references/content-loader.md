@@ -9,10 +9,11 @@ the client gets `HelpArticleSummary[]` and `HelpSearchDoc[]` as props.
 
 ## Why an index
 
-The original loader had six exported functions that each walked the tree. A
-single article page called them from the layout, the page, `generateMetadata`
-and the related-articles resolver — parsing all 64 files four times per render,
-and once more per locale in `generateStaticParams`. Correct, just wasteful, and
+The earlier implementation's loader had six exported functions that each
+walked the tree. A single article page called them from the layout, the page,
+`generateMetadata` and the related-articles resolver, parsing every file four
+times per render, and once more per locale in `generateStaticParams`. Correct,
+just wasteful, and
 the waste grows with the corpus. `getHelpIndex(locale)` is wrapped in React's
 `cache()`, so within one request every caller shares one parse; between
 requests nothing is retained, so content edits show up in dev without a restart.
@@ -83,8 +84,9 @@ export function strList(data: Frontmatter, key: string): string[] {
 ```
 
 `num` accepts `"3"` as well as `3` because a hand-written line parser (which
-the original kept as a fallback) yields strings. `order: 0` is a valid order;
-the original's `|| 999` sent it to the end of the list.
+the earlier implementation kept as a fallback) yields strings. `order: 0` is a
+valid order; the earlier implementation's `|| 999` sent it to the end of the
+list.
 
 ## The loader
 

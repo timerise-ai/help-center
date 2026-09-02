@@ -24,8 +24,8 @@ description: >
 A help center is a small static site with one hard requirement: **every
 article must be reachable** — from the sidebar, from search, from a translated
 locale that does not have it yet. Each defect the audit found in the earlier
-implementation broke that requirement silently: a sidebar that clipped 25 of
-45 links, search that returned nothing for a query with a trailing space,
+implementation broke that requirement silently: a sidebar that hid half a
+category, search that returned nothing for a query with a trailing space,
 related links that vanished when a slug was renamed. The module below is built
 so those cannot recur without a build failing or a test going red.
 
@@ -84,7 +84,7 @@ Everything reads from the index. Nothing else touches the filesystem.
 ## Hard rules
 
 > **Never cap a collapsible list's height.** `max-h-[600px]` + `overflow-hidden`
-> is how the earlier implementation hid 25 of 45 articles with no signal. Use
+> is how the earlier implementation hid half a category with no signal. Use
 > `hidden` or a real collapsible primitive.
 
 > **Never sort by `order` alone.** Ties fall through to `readdir` order, which

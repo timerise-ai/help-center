@@ -1,11 +1,11 @@
 # Provenance
 
 Written by the engineer who has shipped this module. The earlier
-implementation it was audited against, a marketing-site help center, ran 65
-markdown articles in three categories, English content served under three
-locale prefixes, client-side search, a collapsible sidebar and a mobile drawer,
-JSON-LD and sitemap integration. The architecture is that module's. The
-templates are not a transcription of it: the audit below is why.
+implementation it was audited against, a marketing-site help center, ran a
+few dozen markdown articles in category folders, English content served under
+several locale prefixes, client-side search, a collapsible sidebar and a
+mobile drawer, JSON-LD and sitemap integration. The architecture is that
+module's. The templates are not a transcription of it: the audit below is why.
 
 Every claim here was verified against the earlier implementation, its code or
 its rendered pages, not inferred from a summary.
@@ -19,11 +19,10 @@ same earlier implementation over the following hours and were recorded in
 ### 1. The sidebar hid half of the biggest category
 
 The desktop sidebar animated category collapse with `max-h-[600px]` +
-`overflow-hidden`. The largest category had 45 articles at ~31 px each. Measured
-on the live site: the list's scroll height was 1410 px inside a 600 px box, and
-**25 of 45 links were unreachable** from the sidebar. The mobile drawer used a
-different cap (2000 px) and was fine — so nobody testing on a phone saw it, and
-on desktop the list simply looked complete.
+`overflow-hidden`. The largest category's list was more than twice the height
+of the cap, so **more than half of its links were unreachable** from the
+sidebar. The mobile drawer used a much larger cap and was fine, so nobody
+testing on a phone saw it, and on desktop the list simply looked complete.
 
 **Shipped:** `hidden` attribute, no height cap; one `HelpNavTree` for both
 surfaces; the sticky sidebar scrolls independently so the fixed sidebar cannot
@@ -136,10 +135,10 @@ The earlier implementation parsed frontmatter line by line: `key: value`,
 JSON-parse anything in `[...]`. Prettier wraps arrays past 100 columns onto
 several lines, and every such value read as empty, silently. Found in the
 earlier implementation hours *after* the audit, when a new article's `related`
-list came out blank: **45 of 161** content files across the site's four
-markdown content types (the help center and three others sharing the parser)
-had an empty list field in production, `related` and `tags` among them,
-including cards that had rendering code and had never once rendered.
+list came out blank: **roughly a quarter of the content files** across every
+markdown content type sharing the parser had an empty list field in
+production, `related` and `tags` among them, including cards that had
+rendering code and had never once rendered.
 
 The templates never had this — the skill's loader used `gray-matter` from
 0.1.0 — so this entry exists to name the trap: **never hand-roll a
@@ -167,7 +166,7 @@ Run over the corpus, the 0.2.0 validator found, invisible on the site:
   spellings (lower case, title case, hyphenated);
 - **5 singular/plural pairs**: domain nouns such as `email(s)` and
   `integration(s)`;
-- **157 distinct tags on 65 articles, 101 used once** — chips, not
+- **more distinct tags than articles, most of them used once**: chips, not
   navigation, until a tag has a page and a count next to it.
 
 **Shipped:** slug identity (`tagSlug`, folded like search), majority-spelling
@@ -202,8 +201,8 @@ and found the same 3 order ties still present.
 - **All categories open by default** in both the sidebar and the drawer.
 - **A per-page shell component instead of `layout.tsx`** — a layout cannot
   see its children's `slug`.
-- **The renderer demotes `#` to `<h2>`**: 23 of 65 articles started with an
-  H1 despite the page owning it.
+- **The renderer demotes `#` to `<h2>`**: about a third of the articles
+  started with an H1 despite the page owning it.
 - **Content in the repository**, published by deploy. No CMS, no
   `revalidate` — a content change is a code change.
 
@@ -240,6 +239,6 @@ Fix in this order — the first is live for every desktop visitor:
 6. Then 5, 6, 8, 9, 10, 11 as hygiene.
 7. **Defect 12** — if any content type still has a line-based parser,
    replace it before adding a single article; diff every field before and
-   after, as the earlier implementation did (161 files, no data lost).
+   after, as the earlier implementation did (no data lost).
 8. **Defect 13** — before adding tag pages, key by slug and run the validator;
    fix the spellings in content, not in code.

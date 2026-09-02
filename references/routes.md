@@ -213,9 +213,9 @@ The tag cloud is the twelve most-used tags ([tags.md](tags.md)); `index.tags`
 is already sorted that way.
 
 `getFeaturedArticles` returns the `featured: true` articles, or the first N in
-category order when none is flagged. The original labelled that fallback
-"Popular articles" — it was the first six files of the first folder. Label it
-for what it is (`featuredHeading: "Start here"`) and flag real picks.
+category order when none is flagged. The earlier implementation labelled that
+fallback "Popular articles": it was the first files of the first folder. Label
+it for what it is (`featuredHeading: "Start here"`) and flag real picks.
 
 ## Category page
 

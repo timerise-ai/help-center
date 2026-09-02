@@ -95,8 +95,8 @@ export default function HelpShell({
               {/*
                * Sticky AND independently scrollable. A sticky element taller
                * than the viewport cannot be scrolled to its end until the
-               * page reaches the bottom — with 45 articles in one category the
-               * tree is taller than most screens.
+               * page reaches the bottom; with a few dozen articles in one
+               * category the tree is taller than most screens.
                */}
               <nav
                 aria-label={strings.title}
@@ -271,9 +271,9 @@ export function reportHelpSearchMiss(query: string): void {
 
 ## Navigation tree
 
-One component for both the sidebar and the drawer. The original had two
-copies with the same collapsible logic and different height caps — and the
-sidebar's cap is what hid half a category.
+One component for both the sidebar and the drawer. The earlier implementation
+had two copies with the same collapsible logic and different height caps, and
+the sidebar's cap is what hid half a category.
 
 ```tsx
 // file: src/components/help/HelpNavTree.tsx
@@ -350,9 +350,10 @@ export default function HelpNavTree({
               {/*
                * `hidden`, not a max-height transition. A capped max-height with
                * overflow-hidden silently clips whatever does not fit; in the
-               * source, 25 of 45 links in one category were unreachable from
-               * the sidebar and nothing signalled it. Animate with the host's
-               * Collapsible primitive if wanted — never with a fixed cap.
+               * earlier implementation more than half the links in one
+               * category were unreachable from the sidebar and nothing
+               * signalled it. Animate with the host's Collapsible primitive
+               * if wanted, never with a fixed cap.
                */}
               <ul id={listId} hidden={!isOpen}>
                 {(nav.articlesByCategory[category.id] ?? []).map((article) => {

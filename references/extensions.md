@@ -39,8 +39,8 @@ percentages are noise that discourages readers.
 
 ## `updatedAt` from git
 
-Manual `updatedAt` rots: in the audited corpus 37 of 65 articles carried the
-same date, clearly the import date. Derive it at build:
+Manual `updatedAt` rots: in the audited corpus more than half the articles
+carried the same date, clearly the import date. Derive it at build:
 
 ```bash
 git log -1 --format=%cs -- content/help/app/get-started.md
@@ -80,7 +80,8 @@ already accepts in-memory articles. Then:
 If the host has a chat surface, hand it the search index as a tool
 (`searchHelp(docs, query)`) and the article bodies as a retrieval tool by
 `category/slug`. Cite the article URL in the answer. Do not embed the whole
-corpus in the system prompt — 64 articles is already ~100k tokens. Log
+corpus in the system prompt: a few dozen articles already run to a hundred
+thousand tokens. Log
 questions with no matching article next to the zero-result search log; they
 are the same signal.
 

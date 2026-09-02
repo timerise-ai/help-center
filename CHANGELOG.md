@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.7] - 2026-09-02
+
+Wording release. Templates and technical content are unchanged from 0.2.6.
+
+### Changed
+- The corpus figures of the earlier implementation (article, file, tag and category
+  counts, and ratios such as "25 of 45 links") are gone from `SKILL.md`, `CLAUDE.md` and
+  `references/`, replaced by the shape of each finding. Design thresholds and the
+  skill's own test counts stay. Six remaining "the original" mentions in
+  `references/` now say the earlier implementation.
+
 ## [0.2.6] - 2026-09-02
 
 Documentation-only release. The skill itself, `SKILL.md` and `references/`, is
