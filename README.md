@@ -8,11 +8,12 @@ and sitemap entries, and a content validator for CI. Content lives in the reposi
 
 A help center is a small static site with one hard requirement: **every article must be reachable**: from the
 sidebar, from search, from a locale that has not been translated yet. This skill was written by the engineer
-who has shipped this module, and every defect the audit of the earlier implementation found broke that
-requirement silently: a sidebar that hid half a category, a search that returned nothing for a query with a
-trailing space, a frontmatter parser that dropped multi-line arrays, tags split in two by their spelling. The
-templates are built so none of those can recur without a build failing or a test going red; the ledger is
-[references/provenance.md](references/provenance.md).
+who has shipped this module; the earlier implementation it was audited against was a marketing-site help
+center. The templates hold that requirement as verified properties: the sidebar shows every article of every
+category, the parser reads every frontmatter shape the corpus uses and the validator fails the build on the
+ones it cannot, tags group by slug so one label reaches one page however it is spelled, and search ranks a
+query however it is typed, trailing space and diacritics included. The loader, search and tag suites cover
+each of those; [references/provenance.md](references/provenance.md) carries the record.
 
 The filesystem is a seam, not a premise: one `getHelpIndex(locale)` builds the index every page, the search
 box, the sitemap and the validator read from, and nothing else touches `fs`. Swapping in a CMS or a database
@@ -47,7 +48,7 @@ mkdir -p ~/.agents/skills
 ln -s ~/.claude/skills/help-center-markdown ~/.agents/skills/help-center-markdown
 ```
 
-Update the skill with `git pull` in its directory. The current release is **0.2.7**. See
+Update the skill with `git pull` in its directory. The current release is **0.2.8**. See
 [`CHANGELOG.md`](CHANGELOG.md). The [skills index](https://github.com/timerise-ai/skills) lists the other
 Timerise Skills and how to install them all at once.
 
@@ -78,20 +79,23 @@ the skill stays cheap in context until a topic is actually needed.
 | `references/ui.md` | Shell, header, sidebar, mobile drawer |
 | `references/ui-content.md` | Breadcrumbs, category cards, article lists, the markdown renderer, style hooks |
 | `references/extensions.md` | Full-text/Pagefind, table of contents, feedback, git dates, MDX, CMS, redirects |
-| `references/provenance.md` | The thirteen defects found in the earlier implementation and how the templates fix them |
+| `references/provenance.md` | The engineering ledger: what the audit of the earlier implementation changed and how the templates verify it, what was kept on purpose, what is new |
 
 ## The four non-negotiables
 
 These travel with the module and are never optional (see `references/adaptation.md`):
 
-1. **Summaries, never articles, cross to the client.** `toSummary` / `toSearchDoc` exist so the whole corpus
-   is not serialised into every page.
-2. **`hidden`, not a height cap, on collapsible nav.** A `max-height` cap with `overflow-hidden` is how the
-   source lost half a category with no signal.
-3. **Untranslated pages canonicalise to the default locale** and stay out of hreflang and the sitemap.
-   Otherwise every fallback page is a duplicate.
-4. **Validation runs in CI.** The runtime is deliberately forgiving: it drops bad refs and sorts missing
-   orders last; the validator script is where authors find out.
+1. **Summaries, never articles, cross to the client.** `toSummary` / `toSearchDoc` are the only shapes client
+   components accept, so a page carries about a kilobyte per article rather than the whole corpus; the
+   type signatures enforce it.
+2. **`hidden`, not a height cap, on collapsible nav.** A height cap clips whatever does not fit and reports
+   nothing; `hidden` renders every link of every category or none, and the shell template uses only that.
+3. **Untranslated pages canonicalise to the default locale** and stay out of hreflang and the sitemap, so a
+   fallback page is never indexed as a duplicate; the loader test flags the fallback and the routes read
+   that flag.
+4. **Validation runs in CI.** The runtime is forgiving on purpose, dropping bad refs and sorting missing
+   orders last, and `validate:help` fails the build for the author; the validator tests cover unresolved
+   refs, order ties and skipped files.
 
 Everything else is the host app's: styling, naming, renderer, i18n system.
 
@@ -113,8 +117,8 @@ Claims in this skill are meant to be verifiable: if you change a factual claim, 
 whether against the library, the docs, or a reproduction.
 
 Adding, removing or renaming a file in `references/` means updating the quick start and the reference
-directory table in `SKILL.md`, the file table above, and any relative cross-links. The odd-looking parts of
-the templates encode documented defects, and `references/provenance.md` is the ledger that must stay truthful:
+directory table in `SKILL.md`, the file table above, and any relative cross-links. Every odd-looking part of
+the templates is there for a reason, and `references/provenance.md` is the ledger that must stay truthful:
 read it before simplifying anything, and add an entry for anything you change. Commits follow Conventional
 Commits and releases follow [STANDARD.md](https://github.com/timerise-ai/skills/blob/main/STANDARD.md) in the
 index; `CLAUDE.md` carries the full editing conventions.

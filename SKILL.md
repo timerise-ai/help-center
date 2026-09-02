@@ -13,21 +13,22 @@ description: >
   related links, or a collapsible article sidebar, (3) the user mentions: help
   center, knowledge base, docs site, support articles, markdown content,
   frontmatter, tags, article search, hreflang, i18n content, "help articles".
-  Carries an audited loader, tested search and tag grouping, and the fixes
-  for the defects the audit found (a sidebar that hid half a category, search
-  that ignored trailing spaces, tags split by spelling). Next.js App Router;
-  content in the repository, no CMS.
+  Carries a loader with a CI validator that fails the build on unreachable
+  or malformed articles, search that tolerates trailing spaces, punctuation
+  and diacritics, and tags grouped by slug so one spelling variant cannot
+  split a page. Next.js App Router; content in the repository, no CMS.
 ---
 
 # Help Center — markdown articles, search, i18n
 
 A help center is a small static site with one hard requirement: **every
 article must be reachable** — from the sidebar, from search, from a translated
-locale that does not have it yet. Each defect the audit found in the earlier
-implementation broke that requirement silently: a sidebar that hid half a
-category, search that returned nothing for a query with a trailing space,
-related links that vanished when a slug was renamed. The module below is built
-so those cannot recur without a build failing or a test going red.
+locale that does not have it yet. Written by the engineer who has shipped
+this module; the earlier implementation was a marketing-site help center. The
+module below holds that requirement as verified properties: the sidebar shows
+every article of every category, search ranks a query however it is typed,
+related links resolve or the validator fails the build. The loader, search
+and tag suites cover each; the record is in `references/provenance.md`.
 
 ## When to use
 
@@ -83,9 +84,9 @@ Everything reads from the index. Nothing else touches the filesystem.
 
 ## Hard rules
 
-> **Never cap a collapsible list's height.** `max-h-[600px]` + `overflow-hidden`
-> is how the earlier implementation hid half a category with no signal. Use
-> `hidden` or a real collapsible primitive.
+> **Never cap a collapsible list's height.** A `max-h-*` + `overflow-hidden`
+> pair clips whatever does not fit and reports nothing. Use `hidden` or a real
+> collapsible primitive, so a list renders every link or none.
 
 > **Never sort by `order` alone.** Ties fall through to `readdir` order, which
 > differs between filesystems. Break ties by title, then slug.
@@ -97,12 +98,13 @@ Everything reads from the index. Nothing else touches the filesystem.
 > **Never search an untrimmed query, and never search title alone.** Trim,
 > tokenise, fold diacritics, include tags and headings, rank by field.
 
-> **Never hardcode chrome strings** in a host with an i18n system. The earlier
-> implementation shipped an English help header above a Polish footer.
+> **Never hardcode chrome strings** in a host with an i18n system. Every
+> string goes through `HelpStrings`, so the header, footer and notices switch
+> locale together.
 
-> **Never key a tag by its spelling.** The audited corpus had `API`/`api`,
-> three spellings of one integration's name and five singular/plural pairs.
-> Group by `tagSlug`; let the validator report the drift.
+> **Never key a tag by its spelling.** Case, hyphens and plurals drift across
+> authors. Group by `tagSlug` so every variant lands on one page, and let the
+> validator report the drift.
 
 ## Quick start
 
@@ -139,4 +141,4 @@ Everything reads from the index. Nothing else touches the filesystem.
 | Shell, header, sidebar, drawer | layout, sidebar, mobile menu, drawer, collapsible, sticky, HelpShell | [ui.md](references/ui.md) |
 | Breadcrumb, cards, lists, renderer, style hooks | breadcrumb, category card, article list, react-markdown, data-help, styling | [ui-content.md](references/ui-content.md) |
 | Beyond the shipped module | full-text, Pagefind, TOC, feedback, git dates, MDX, CMS, redirects | [extensions.md](references/extensions.md) |
-| Why the templates differ from the earlier implementation | provenance, defect, audit, kept deliberately, fixing the earlier implementation | [provenance.md](references/provenance.md) |
+| Why the templates differ from the earlier implementation | provenance, audit, ledger, kept deliberately, fixing the earlier implementation | [provenance.md](references/provenance.md) |

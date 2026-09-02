@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.8] - 2026-09-02
+
+Wording release. Templates and technical content are unchanged from 0.2.7.
+
+### Changed
+- The front door (`README.md`, `SKILL.md` including the frontmatter description, and
+  `CLAUDE.md`) describes the module by the properties the build and the tests verify:
+  every article reachable, tags grouped by slug, search ranking a query however it is
+  typed. The audit record stays in `references/provenance.md`.
+
 ## [0.2.7] - 2026-09-02
 
 Wording release. Templates and technical content are unchanged from 0.2.6.
