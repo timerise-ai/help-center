@@ -8,11 +8,11 @@ and sitemap entries, and a content validator for CI. Content lives in the reposi
 
 A help center is a small static site with one hard requirement: **every article must be reachable**: from the
 sidebar, from search, from a locale that has not been translated yet. This skill was written by the engineer
-who built a production help center on this design (65 articles, three categories, three locale prefixes), and
-every defect the audit of that earlier implementation found broke that requirement silently: a sidebar that
-clipped 25 of 45 links, a search that returned nothing for a query with a trailing space, a frontmatter parser
-that dropped multi-line arrays in 45 of 161 files, tags split in two by their spelling. The templates are
-built so those cannot recur without a build failing or a test going red.
+who has shipped this module, and every defect the audit of the earlier implementation found broke that
+requirement silently: a sidebar that hid half a category, a search that returned nothing for a query with a
+trailing space, a frontmatter parser that dropped multi-line arrays, tags split in two by their spelling. The
+templates are built so none of those can recur without a build failing or a test going red; the ledger is
+[references/provenance.md](references/provenance.md).
 
 The filesystem is a seam, not a premise: one `getHelpIndex(locale)` builds the index every page, the search
 box, the sitemap and the validator read from, and nothing else touches `fs`. Swapping in a CMS or a database
@@ -47,7 +47,7 @@ mkdir -p ~/.agents/skills
 ln -s ~/.claude/skills/help-center-markdown ~/.agents/skills/help-center-markdown
 ```
 
-Update the skill with `git pull` in its directory. The current release is **0.2.5**. See
+Update the skill with `git pull` in its directory. The current release is **0.2.6**. See
 [`CHANGELOG.md`](CHANGELOG.md). The [skills index](https://github.com/timerise-ai/skills) lists the other
 Timerise Skills and how to install them all at once.
 

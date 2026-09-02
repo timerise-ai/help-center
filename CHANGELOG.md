@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.6] - 2026-09-02
+
+Documentation-only release. The skill itself, `SKILL.md` and `references/`, is
+unchanged from 0.2.5.
+
+### Changed
+- README: the intro states the origin in the words of the skill standard and names the
+  audit's findings by kind, without the corpus figures, which stay in
+  `references/provenance.md` where they were measured. The intro links the ledger.
+
 ## [0.2.5] - 2026-09-02
 
 Wording release. Templates and technical content are unchanged from 0.2.4.
