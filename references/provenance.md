@@ -161,11 +161,12 @@ the **exact** string (`tags.includes(tag)`), and nothing ever normalised a tag
 for a URL.
 Run over the corpus, the 0.2.0 validator found, invisible on the site:
 
-- **6 slugs with several spellings** — `api`/`API`, `rest`/`REST`,
-  `sdk`/`SDK`, `graphql`/`GraphQL`, `booking page`/`booking-page`, and
-  `google calendar`/`Google Calendar`/`google-calendar` (three);
-- **5 singular/plural pairs** — `booking(s)`, `service(s)`, `location(s)`,
-  `email(s)`, `integration(s)`;
+- **6 slugs with several spellings**: case pairs such as `api`/`API`,
+  `rest`/`REST`, `sdk`/`SDK` and `graphql`/`GraphQL`, a two-word feature
+  name with and without a hyphen, and one integration's name in three
+  spellings (lower case, title case, hyphenated);
+- **5 singular/plural pairs**: domain nouns such as `email(s)` and
+  `integration(s)`;
 - **157 distinct tags on 65 articles, 101 used once** — chips, not
   navigation, until a tag has a page and a count next to it.
 

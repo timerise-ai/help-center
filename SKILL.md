@@ -101,8 +101,8 @@ Everything reads from the index. Nothing else touches the filesystem.
 > implementation shipped an English help header above a Polish footer.
 
 > **Never key a tag by its spelling.** The audited corpus had `API`/`api`,
-> three spellings of `google calendar` and five singular/plural pairs. Group
-> by `tagSlug`; let the validator report the drift.
+> three spellings of one integration's name and five singular/plural pairs.
+> Group by `tagSlug`; let the validator report the drift.
 
 ## Quick start
 
