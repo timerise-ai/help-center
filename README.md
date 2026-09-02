@@ -1,5 +1,11 @@
 # help-center-markdown
 
+[![Agent Skills](https://img.shields.io/badge/Agent_Skills-open_format-059669)](https://agentskills.io)
+[![skills.sh](https://img.shields.io/badge/skills.sh-npx_skills_add-059669)](https://www.skills.sh)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-compatible-059669)](https://docs.claude.com/en/docs/claude-code/skills)
+[![Codex CLI](https://img.shields.io/badge/Codex_CLI-compatible-059669)](https://developers.openai.com/codex/skills)
+[![Gemini CLI](https://img.shields.io/badge/Gemini_CLI-compatible-059669)](https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/skills.md)
+
 An [Agent Skill](https://agentskills.io) that teaches an agent to build a markdown-backed help center in a
 **Next.js App Router** app: category folders of frontmatter articles, statically rendered landing, category,
 tag and article pages, client-side search with ranking and keyboard navigation, locale-aware routing with
